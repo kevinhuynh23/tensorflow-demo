@@ -5,6 +5,9 @@ import sys
 import sagemaker
 from sagemaker.tensorflow import TensorFlow
 
+os.environ['AWS_DEFAULT_REGION'] = 'us-west-2'
+sess = sagemaker.Session()
+
 BUCKET_NAME_SOURCE = os.environ.get('SRC_BKT_NAME')
 BUCKET_NAME_OUTPUT = os.environ.get('OUTPUT_BKT')
 PREFIX = 'input/data/'
@@ -21,6 +24,7 @@ def train():
                                     training_steps= 100,                                  
                                     evaluation_steps= 100,
                                     hyperparameters={'learning_rate': 0.001},
+                                    sagemaker_session=sess,
                                     train_instance_count=1,
                                     train_instance_type='ml.c4.xlarge')
 
